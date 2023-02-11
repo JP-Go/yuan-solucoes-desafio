@@ -2,6 +2,7 @@ import type { LatLngTuple } from 'leaflet';
 import type { ReactElement } from 'react';
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
 import { InfoOverlay } from './components/InfoOverlay';
+import { SearchBar } from './components/SearchBar';
 
 const coords = [-5.03, -42.9] as LatLngTuple;
 
@@ -24,6 +25,7 @@ function App(): ReactElement {
           </Popup>
         </Marker>
       </MapContainer>
+      <SearchBar />
       <InfoOverlay />
     </div>
   );
