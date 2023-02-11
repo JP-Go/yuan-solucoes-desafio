@@ -11,7 +11,7 @@ export function InfoOverlay(): ReactElement {
   }
   return (
     <div
-      className={`absolute bottom-0 left-1/2 -translate-x-1/2 bg-white text-slate-800
+      className={`absolute bottom-0 bg-white text-slate-800
                  w-full md:w-3/5 md:py-4 rounded-lg flex flex-col align-center
                  drop-shadow-lg transition-all ${
                    expanded

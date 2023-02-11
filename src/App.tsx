@@ -7,7 +7,7 @@ const coords = [-5.03, -42.9] as LatLngTuple;
 
 function App(): ReactElement {
   return (
-    <div className="flex flex-col relative w-screen h-screen">
+    <div className="flex flex-col relative w-screen h-screen items-center">
       <MapContainer
         className="w-full h-screen fixed inset-0"
         center={coords}
