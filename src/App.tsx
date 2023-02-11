@@ -1,7 +1,12 @@
-import { type ReactElement } from 'react';
+import type { ReactElement } from 'react';
+import { InfoOverlay } from './components/RoutesOverlay';
 
 function App(): ReactElement {
-  return <div className="text-3xl text-blue-500">Hello world</div>;
+  return (
+    <div className="flex flex-col relative w-screen h-screen">
+      <InfoOverlay />
+    </div>
+  );
 }
 
 export default App;
