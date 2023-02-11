@@ -12,7 +12,6 @@ module.exports = {
   },
   plugins: ['react'],
   rules: {
-    'comma-dangle': ['error', 'always-multiline'],
     semi: 0,
     'react/react-in-jsx-scope': 'off',
     '@typescript-eslint/semi': 'off',
