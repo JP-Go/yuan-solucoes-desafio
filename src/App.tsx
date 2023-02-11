@@ -1,7 +1,7 @@
 import type { LatLngTuple } from 'leaflet';
 import type { ReactElement } from 'react';
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
-import { InfoOverlay } from './components/RoutesOverlay';
+import { InfoOverlay } from './components/InfoOverlay';
 
 const coords = [-5.03, -42.9] as LatLngTuple;
 
