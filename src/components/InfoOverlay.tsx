@@ -27,10 +27,10 @@ export function InfoOverlay(): ReactElement {
         Últimas rotas
       </h1>
       <div>
-        <RouteInfo />
-        <RouteInfo />
-        <RouteInfo />
-        <RouteInfo />
+        <RouteInfo stops={2} />
+        <RouteInfo stops={0} />
+        <RouteInfo stops={3} />
+        <RouteInfo stops={1} />
       </div>
     </div>
   );
