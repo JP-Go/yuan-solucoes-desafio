@@ -20,8 +20,10 @@ export function SearchBar({ onSelected }: SearchBarProps): ReactElement {
   async function handleSelectLocation(placeId: string): Promise<void> {
     const location = await fetchAddresses(placeId);
     onSelected({
+      displayText: location.displayName,
       lat: location.lat,
-      lng: location.lng
+      lng: location.lng,
+      id: placeId
     });
     clearSuggestions();
   }
@@ -44,8 +46,7 @@ export function SearchBar({ onSelected }: SearchBarProps): ReactElement {
           }}
         />
       </div>
-      {status === 'OK'
-        ? (
+      {status === 'OK' ? (
         <ul className="bg-white flex flex-col z-10 w-full rounded-lg mt-2 p-2 gap-2">
           {data.map(({ place_id: placeId, description }) => {
             return (
@@ -53,7 +54,7 @@ export function SearchBar({ onSelected }: SearchBarProps): ReactElement {
                 className="border-b-2 border-slate-300 max-w-full cursor-pointer"
                 key={placeId}
                 onClick={() => {
-                  setValue(description, false)
+                  setValue(description, false);
                   void handleSelectLocation(placeId);
                 }}
               >
@@ -62,8 +63,7 @@ export function SearchBar({ onSelected }: SearchBarProps): ReactElement {
             );
           })}
         </ul>
-          )
-        : null}
+      ) : null}
     </div>
   );
 }
