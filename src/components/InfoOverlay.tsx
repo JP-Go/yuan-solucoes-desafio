@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import type { ReactElement } from 'react';
-import { type LatLng } from '../@types/interfaces';
+import { type Location } from '../@types/interfaces';
 import { RoutesList } from './RoutesList';
 import { NewRouteStops } from './NewRouteStops';
 
 interface InfoOverlayProps {
   title: string;
-  selectedPlaces: LatLng[];
+  selectedPlaces: Location[];
   hasSelectedPlaces: boolean;
 }
 

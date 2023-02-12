@@ -1,9 +1,9 @@
 import { ArrowDown } from 'phosphor-react';
 import { type ReactElement } from 'react';
-import { type LatLng } from '../@types/interfaces';
+import { type Location } from '../@types/interfaces';
 
 interface NewRouteStopsProps {
-  stops: LatLng[];
+  stops: Location[];
 }
 
 export function NewRouteStops({ stops }: NewRouteStopsProps): ReactElement {

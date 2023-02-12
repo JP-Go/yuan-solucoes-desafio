@@ -1,11 +1,11 @@
 import { MagnifyingGlass } from 'phosphor-react';
 import { type ReactElement } from 'react';
 import usePlacesAutocomplete from 'use-places-autocomplete';
-import { type LatLng } from '../@types/interfaces';
+import { type Location } from '../@types/interfaces';
 import { fetchAddresses } from '../lib/api/geocoding';
 
 interface SearchBarProps {
-  onSelected: (location: LatLng) => void;
+  onSelected: (location: Location) => void;
 }
 
 export function SearchBar({ onSelected }: SearchBarProps): ReactElement {

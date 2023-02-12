@@ -4,7 +4,7 @@ import { type ReactElement, useMemo, useState } from 'react';
 import { InfoOverlay } from './components/InfoOverlay';
 import { SearchBar } from './components/SearchBar';
 import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
-import { type LatLng } from './@types/interfaces';
+import { type Location } from './@types/interfaces';
 
 const libraries = ['places'];
 
@@ -15,7 +15,7 @@ function App(): ReactElement {
   });
   const center = useMemo(() => ({ lat: -5.1, lng: -42.9 }), []);
 
-  const [selected, setSelected] = useState<LatLng[]>([]);
+  const [selected, setSelected] = useState<Location[]>([]);
   const hasSelectedPlaces = selected?.length > 0;
   return (
     <div className="flex flex-col relative w-screen h-screen items-center">
