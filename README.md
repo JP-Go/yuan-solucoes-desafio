@@ -11,7 +11,7 @@ São requisitos para rodar essa aplicação:
 
 - Uma chave da API de Places do Google
   [https://developers.google.com/maps/documentation/places/web-service](https://developers.google.com/maps/documentation/places/web-service)
-- `node>=18.13.0`
+- `node>=18.13.0` [https://nodejs.org/en/](https://nodejs.org/en/) 
 
 **Nota:** Esses requisitos podem mudar com o tempo. Caso encontre algum erro ao
 tentar rodar a aplicação [crie uma issue](https://github.com/JP-Go/yuan-solucoes-desafio/issues/new) 
