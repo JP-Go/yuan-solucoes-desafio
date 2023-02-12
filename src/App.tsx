@@ -1,32 +1,30 @@
-import type { LatLngTuple } from 'leaflet';
-import type { ReactElement } from 'react';
-import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
+import { type ReactElement, useMemo } from 'react';
 import { InfoOverlay } from './components/InfoOverlay';
 import { SearchBar } from './components/SearchBar';
-
-const coords = [-5.03, -42.9] as LatLngTuple;
+import { GoogleMap, useLoadScript } from '@react-google-maps/api';
 
 function App(): ReactElement {
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: import.meta.env.VITE_GEOCODING_API_KEY
+  });
+  const center = useMemo(() => ({ lat: 44, lng: -80 }), [])
   return (
     <div className="flex flex-col relative w-screen h-screen items-center">
-      <MapContainer
-        className="w-full h-screen fixed inset-0"
-        center={coords}
-        zoom={13}
-        scrollWheelZoom={false}
-      >
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        <Marker position={coords}>
-          <Popup>
-            A pretty CSS3 popup. <br /> Easily customizable.
-          </Popup>
-        </Marker>
-      </MapContainer>
-      <SearchBar />
-      <InfoOverlay />
+      {isLoaded
+        ? (
+        <>
+          <GoogleMap
+            zoom={10}
+            center={center}
+            mapContainerClassName="w-full h-full"
+          ></GoogleMap>
+          <SearchBar />
+          <InfoOverlay />
+        </>
+          )
+        : (
+        <div className="w-20 h-20 border-l-2 border-b-2 border-slate-800 rounded-full animate-spin"></div>
+          )}
     </div>
   );
 }
