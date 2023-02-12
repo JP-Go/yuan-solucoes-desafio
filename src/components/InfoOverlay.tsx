@@ -1,8 +1,14 @@
 import { useState } from 'react';
 import type { ReactElement } from 'react';
 import { RouteInfo } from './RouteInfo';
+import { type LatLng } from '../@types/interfaces';
 
-export function InfoOverlay(): ReactElement {
+interface InfoOverlayProps {
+  title: string;
+  selectedPlaces: LatLng[];
+}
+
+export function InfoOverlay({ title }: InfoOverlayProps): ReactElement {
   const [expanded, setExpanded] = useState(false);
 
   function toggleExpanded(): void {
@@ -15,8 +21,8 @@ export function InfoOverlay(): ReactElement {
                  w-full md:w-3/5 md:py-4 rounded-lg flex flex-col align-center
                  drop-shadow-lg transition-all ${
                    expanded
-                     ? 'h-2/3 overflow-y-scroll'
-                     : 'h-1/3 overflow-y-hidden'
+                     ? 'h-2/3 max-h-full overflow-y-scroll'
+                     : 'h-1/3 max-h-1/2 overflow-y-hidden'
                  }`}
     >
       <div
@@ -24,7 +30,7 @@ export function InfoOverlay(): ReactElement {
         onClick={toggleExpanded}
       ></div>
       <h1 className="font-bold text-3xl w-full font-title ml-8 mb-4">
-        Últimas rotas
+        {title}
       </h1>
       <div>
         <RouteInfo stops={2} />
