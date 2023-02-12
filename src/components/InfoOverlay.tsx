@@ -3,6 +3,7 @@ import type { ReactElement } from 'react';
 import { type Location } from '../@types/interfaces';
 import { RoutesList } from './RoutesList';
 import { NewRouteStops } from './NewRouteStops';
+import { useAutoAnimate } from '@formkit/auto-animate/react';
 
 interface InfoOverlayProps {
   title: string;
@@ -16,6 +17,7 @@ export function InfoOverlay({
   hasSelectedLocations
 }: InfoOverlayProps): ReactElement {
   const [expanded, setExpanded] = useState(false);
+  const [parent] = useAutoAnimate();
 
   function toggleExpanded(): void {
     setExpanded((e) => !e);
@@ -38,7 +40,7 @@ export function InfoOverlay({
       <h1 className="font-bold text-3xl w-full font-title ml-8 mb-4">
         {title}
       </h1>
-      <div>
+      <div ref={parent}>
         {hasSelectedLocations ? (
           <NewRouteStops stops={selectedLocations} />
         ) : (
