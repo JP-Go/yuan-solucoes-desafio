@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/indent */
 /* eslint-disable multiline-ternary */
-import { type ReactElement, useMemo, useState } from 'react';
+import { type ReactElement, useMemo } from 'react';
 import { InfoOverlay } from './components/InfoOverlay';
 import { SearchBar } from './components/SearchBar';
 import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
-import { type Location } from './@types/interfaces';
+import { useLocations } from './hooks/use-selected-locations';
 
 const libraries = ['places'];
 
@@ -15,32 +15,28 @@ function App(): ReactElement {
   });
   const center = useMemo(() => ({ lat: -5.1, lng: -42.9 }), []);
 
-  const [selected, setSelected] = useState<Location[]>([]);
-  const hasSelectedPlaces = selected?.length > 0;
+  const { locations, appendLocation, removeLocation, hasSelectedLocations } =
+    useLocations();
   return (
     <div className="flex flex-col relative w-screen h-screen items-center">
       {isLoaded ? (
         <>
           <GoogleMap
             zoom={10}
-            center={selected.length > 0 ? selected.at(-1) : center}
+            center={hasSelectedLocations ? locations.at(-1) : center}
             mapContainerClassName="w-full h-full"
           >
-            {hasSelectedPlaces
-              ? selected.map((position) => {
+            {hasSelectedLocations
+              ? locations.map((position) => {
                   return <Marker key={position.id} position={position} />;
                 })
               : null}
           </GoogleMap>
-          <SearchBar
-            onSelected={(location) => {
-              setSelected([...selected, location]);
-            }}
-          />
+          <SearchBar onSelected={appendLocation} />
           <InfoOverlay
-            title={!hasSelectedPlaces ? 'Últimas rotas' : 'Nova rota'}
-            selectedPlaces={selected}
-            hasSelectedPlaces={hasSelectedPlaces}
+            title={hasSelectedLocations ? 'Últimas rotas' : 'Nova rota'}
+            selectedLocations={locations}
+            hasSelectedLocations={hasSelectedLocations}
           />
         </>
       ) : (

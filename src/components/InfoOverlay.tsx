@@ -6,14 +6,14 @@ import { NewRouteStops } from './NewRouteStops';
 
 interface InfoOverlayProps {
   title: string;
-  selectedPlaces: Location[];
-  hasSelectedPlaces: boolean;
+  selectedLocations: Location[];
+  hasSelectedLocations: boolean;
 }
 
 export function InfoOverlay({
   title,
-  selectedPlaces,
-  hasSelectedPlaces
+  selectedLocations,
+  hasSelectedLocations
 }: InfoOverlayProps): ReactElement {
   const [expanded, setExpanded] = useState(false);
 
@@ -39,8 +39,8 @@ export function InfoOverlay({
         {title}
       </h1>
       <div>
-        {hasSelectedPlaces ? (
-          <NewRouteStops stops={selectedPlaces} />
+        {hasSelectedLocations ? (
+          <NewRouteStops stops={selectedLocations} />
         ) : (
           <RoutesList />
         )}
