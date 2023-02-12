@@ -40,6 +40,7 @@ function App(): ReactElement {
           <InfoOverlay
             title={!hasSelectedPlaces ? 'Últimas rotas' : 'Nova rota'}
             selectedPlaces={selected}
+            hasSelectedPlaces={hasSelectedPlaces}
           />
         </>
       ) : (

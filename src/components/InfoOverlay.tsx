@@ -1,14 +1,20 @@
 import { useState } from 'react';
 import type { ReactElement } from 'react';
-import { RouteInfo } from './RouteInfo';
 import { type LatLng } from '../@types/interfaces';
+import { RoutesList } from './RoutesList';
+import { NewRouteStops } from './NewRouteStops';
 
 interface InfoOverlayProps {
   title: string;
   selectedPlaces: LatLng[];
+  hasSelectedPlaces: boolean;
 }
 
-export function InfoOverlay({ title }: InfoOverlayProps): ReactElement {
+export function InfoOverlay({
+  title,
+  selectedPlaces,
+  hasSelectedPlaces
+}: InfoOverlayProps): ReactElement {
   const [expanded, setExpanded] = useState(false);
 
   function toggleExpanded(): void {
@@ -33,10 +39,11 @@ export function InfoOverlay({ title }: InfoOverlayProps): ReactElement {
         {title}
       </h1>
       <div>
-        <RouteInfo stops={2} />
-        <RouteInfo stops={0} />
-        <RouteInfo stops={3} />
-        <RouteInfo stops={1} />
+        {hasSelectedPlaces ? (
+          <NewRouteStops stops={selectedPlaces} />
+        ) : (
+          <RoutesList />
+        )}
       </div>
     </div>
   );
