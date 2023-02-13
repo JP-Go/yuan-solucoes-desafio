@@ -4,11 +4,11 @@ import { Location } from '../@types/interfaces';
 
 interface MapProps {
   onLoad: (map: google.maps.Map) => void;
-  hasSelectedLocations: boolean;
+  hasSelectedStops: boolean;
   locations: Location[];
 }
 
-export function Map({ onLoad, locations, hasSelectedLocations }: MapProps) {
+export function Map({ onLoad, locations, hasSelectedStops }: MapProps) {
   const center = useMemo(() => {
     let location = { lat: -5.09, lng: -42.8 };
     return location;
@@ -18,10 +18,10 @@ export function Map({ onLoad, locations, hasSelectedLocations }: MapProps) {
     <GoogleMap
       onLoad={onLoad}
       zoom={zoom}
-      center={hasSelectedLocations ? locations.at(-1) : center}
+      center={hasSelectedStops ? locations.at(-1) : center}
       mapContainerClassName="w-full h-full"
     >
-      {hasSelectedLocations &&
+      {hasSelectedStops &&
         locations.map((location) => {
           return <Marker key={location.id} position={location} />;
         })}

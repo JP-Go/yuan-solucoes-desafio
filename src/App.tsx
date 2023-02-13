@@ -1,15 +1,9 @@
 /* eslint-disable @typescript-eslint/indent */
 /* eslint-disable multiline-ternary */
-import {
-  type ReactElement,
-  useMemo,
-  useState,
-  useCallback,
-  useEffect
-} from 'react';
+import { type ReactElement, useState, useCallback, useEffect } from 'react';
 import { InfoOverlay } from './components/InfoOverlay';
 import { SearchBar } from './components/SearchBar';
-import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
+import { useLoadScript } from '@react-google-maps/api';
 import { useLocations } from './hooks/use-selected-locations';
 import { useRoutes } from './hooks/use-routes';
 import { Map } from './components/Map';
@@ -26,19 +20,20 @@ function App(): ReactElement {
 
   const { saveRoute, routes } = useRoutes();
   const {
-    locations,
-    appendLocation,
-    removeLocation,
-    hasSelectedLocations,
+    stops,
+    appendStop,
+    removeStop,
+    hasSelectedStops,
     moveTowardsEnd,
     moveTowardsStart,
-    clearLocations
+    clearStops,
+    setStops
   } = useLocations();
 
   useEffect(() => {
-    if (locations.length > 0 && map) {
+    if (stops.length > 0 && map) {
       const bounds = new google.maps.LatLngBounds();
-      locations.forEach((loc) => {
+      stops.forEach((loc) => {
         bounds.extend({
           lat: loc.lat,
           lng: loc.lng
@@ -46,7 +41,7 @@ function App(): ReactElement {
       });
       map.fitBounds(bounds);
     }
-  }, [map, locations]);
+  }, [map, stops]);
   useEffect(() => {
     if (map) {
       map.setOptions({
@@ -61,18 +56,19 @@ function App(): ReactElement {
         <>
           <Map
             onLoad={onLoad}
-            hasSelectedLocations={hasSelectedLocations}
-            locations={locations}
+            hasSelectedStops={hasSelectedStops}
+            locations={stops}
           />
-          <SearchBar onSelected={appendLocation} />
+          <SearchBar onSelected={appendStop} />
           <InfoOverlay
-            title={!hasSelectedLocations ? 'Últimas rotas' : 'Nova rota'}
+            setStops={setStops}
+            title={!hasSelectedStops ? 'Últimas rotas' : 'Nova rota'}
             existingRoutes={routes}
-            clearLocations={clearLocations}
+            clearStops={clearStops}
             saveRoute={saveRoute}
-            selectedLocations={locations}
-            removeLocation={removeLocation}
-            hasSelectedLocations={hasSelectedLocations}
+            selectedStops={stops}
+            removeStop={removeStop}
+            hasSelectedStops={hasSelectedStops}
             moveTowardsEnd={moveTowardsEnd}
             moveTowardsStart={moveTowardsStart}
           />
