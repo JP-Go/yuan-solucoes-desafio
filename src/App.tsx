@@ -5,6 +5,7 @@ import { InfoOverlay } from './components/InfoOverlay';
 import { SearchBar } from './components/SearchBar';
 import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
 import { useLocations } from './hooks/use-selected-locations';
+import { useRoutes } from './hooks/use-routes';
 
 const libraries = ['places'];
 
@@ -15,13 +16,15 @@ function App(): ReactElement {
   });
   const center = useMemo(() => ({ lat: -5.1, lng: -42.9 }), []);
 
+  const { saveRoute, routes } = useRoutes();
   const {
     locations,
     appendLocation,
     removeLocation,
     hasSelectedLocations,
     moveTowardsEnd,
-    moveTowardsStart
+    moveTowardsStart,
+    clearLocations
   } = useLocations();
   return (
     <div className="flex flex-col relative w-screen h-screen items-center">
@@ -41,6 +44,9 @@ function App(): ReactElement {
           <SearchBar onSelected={appendLocation} />
           <InfoOverlay
             title={!hasSelectedLocations ? 'Últimas rotas' : 'Nova rota'}
+            existingRoutes={routes}
+            clearLocations={clearLocations}
+            saveRoute={saveRoute}
             selectedLocations={locations}
             removeLocation={removeLocation}
             hasSelectedLocations={hasSelectedLocations}
