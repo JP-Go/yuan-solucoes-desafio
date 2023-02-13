@@ -1,13 +1,23 @@
 import { type ReactElement } from 'react';
+import { Route } from '../@types/interfaces';
 import { RouteInfo } from './RouteInfo';
 
-export function RoutesList(): ReactElement {
+interface RoutesListProps {
+  routes: Route[];
+}
+
+export function RoutesList({ routes }: RoutesListProps): ReactElement {
   return (
     <>
-      <RouteInfo stops={2} />
-      <RouteInfo stops={0} />
-      <RouteInfo stops={3} />
-      <RouteInfo stops={1} />
+      {routes.length > 0 ? (
+        routes?.map((route) => {
+          return <RouteInfo key={route.id} route={route} />;
+        })
+      ) : (
+        <p className="font-bold text-2xl text-center w-full">
+          Não há rotas salvas
+        </p>
+      )}
     </>
   );
 }
