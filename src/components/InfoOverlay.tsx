@@ -21,7 +21,6 @@ export function InfoOverlay({
 
   function toggleExpanded(): void {
     setExpanded((e) => !e);
-    console.log(expanded);
   }
   return (
     <div
