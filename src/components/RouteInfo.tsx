@@ -11,8 +11,8 @@ export function RouteInfo({ route }: RouteInfoProps): ReactElement {
   const end = route.stops.at(-1)!;
   const extraStops = route.stops.length - 2;
   return (
-    <div className="flex space-around w-full border-t-2 border-slate-500 px-8 py-4">
-      <div className="flex flex-col text-center items-center justify-center gap-4">
+    <div className="grid grid-cols-3 space-around w-full border-t-2 border-slate-500 px-8 py-4">
+      <div className="flex flex-col text-center items-center justify-center gap-4 px-8">
         <p className="font-medium text-2xl">Partida</p>
         <MapPin size={32} />
         <p>{start.displayText}</p>
