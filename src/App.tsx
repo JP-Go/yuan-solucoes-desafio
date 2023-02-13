@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/indent */
 /* eslint-disable multiline-ternary */
-import { type ReactElement, useMemo, useState } from 'react';
+import { type ReactElement, useMemo } from 'react';
 import { InfoOverlay } from './components/InfoOverlay';
 import { SearchBar } from './components/SearchBar';
 import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
-import { type LatLng } from './@types/interfaces';
+import { useLocations } from './hooks/use-selected-locations';
+import { useRoutes } from './hooks/use-routes';
 
 const libraries = ['places'];
 
@@ -15,31 +16,42 @@ function App(): ReactElement {
   });
   const center = useMemo(() => ({ lat: -5.1, lng: -42.9 }), []);
 
-  const [selected, setSelected] = useState<LatLng[]>([]);
-  const hasSelectedPlaces = selected?.length > 0;
+  const { saveRoute, routes } = useRoutes();
+  const {
+    locations,
+    appendLocation,
+    removeLocation,
+    hasSelectedLocations,
+    moveTowardsEnd,
+    moveTowardsStart,
+    clearLocations
+  } = useLocations();
   return (
     <div className="flex flex-col relative w-screen h-screen items-center">
       {isLoaded ? (
         <>
           <GoogleMap
             zoom={10}
-            center={selected.length > 0 ? selected.at(-1) : center}
+            center={hasSelectedLocations ? locations.at(-1) : center}
             mapContainerClassName="w-full h-full"
           >
-            {hasSelectedPlaces
-              ? selected.map((position) => {
+            {hasSelectedLocations
+              ? locations.map((position) => {
                   return <Marker key={position.id} position={position} />;
                 })
               : null}
           </GoogleMap>
-          <SearchBar
-            onSelected={(location) => {
-              setSelected([...selected, location]);
-            }}
-          />
+          <SearchBar onSelected={appendLocation} />
           <InfoOverlay
-            title={!hasSelectedPlaces ? 'Últimas rotas' : 'Nova rota'}
-            selectedPlaces={selected}
+            title={!hasSelectedLocations ? 'Últimas rotas' : 'Nova rota'}
+            existingRoutes={routes}
+            clearLocations={clearLocations}
+            saveRoute={saveRoute}
+            selectedLocations={locations}
+            removeLocation={removeLocation}
+            hasSelectedLocations={hasSelectedLocations}
+            moveTowardsEnd={moveTowardsEnd}
+            moveTowardsStart={moveTowardsStart}
           />
         </>
       ) : (

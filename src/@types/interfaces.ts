@@ -1,4 +1,4 @@
-export interface LatLng {
+export interface Location {
   id: string;
   displayText: string;
   lat: number;
@@ -6,5 +6,6 @@ export interface LatLng {
 }
 
 export interface Route {
-  stops: LatLng[];
+  id: number;
+  stops: Location[];
 }

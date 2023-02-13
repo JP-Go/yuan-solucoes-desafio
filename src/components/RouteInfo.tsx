@@ -1,23 +1,27 @@
 import type { ReactElement } from 'react';
 import { MapPin, DotsThree } from 'phosphor-react';
+import { Route } from '../@types/interfaces';
 
 interface RouteInfoProps {
-  stops: number;
+  route: Route;
 }
 
-export function RouteInfo({ stops }: RouteInfoProps): ReactElement {
+export function RouteInfo({ route }: RouteInfoProps): ReactElement {
+  const start = route.stops[0];
+  const end = route.stops.at(-1)!;
+  const extraStops = route.stops.length - 2;
   return (
-    <div className="flex space-around w-full border-t-2 border-slate-500 px-8 py-4">
-      <div className="flex flex-col text-center items-center justify-center gap-4">
+    <div className="grid grid-cols-3 space-around w-full border-t-2 border-slate-500 px-8 py-4">
+      <div className="flex flex-col text-center items-center justify-center gap-4 px-8">
         <p className="font-medium text-2xl">Partida</p>
         <MapPin size={32} />
-        <p>Rua Gov. Tibério Nunes, 1025</p>
+        <p>{start.displayText}</p>
       </div>
       <div className="flex w-full items-center justify-center space-between">
-        {stops > 0 ? (
+        {extraStops > 0 ? (
           <>
             <DotsThree size={100} />
-            <span>+{stops} paradas</span>
+            <span>+{extraStops} paradas</span>
             <DotsThree size={100} />
           </>
         ) : (
@@ -27,7 +31,7 @@ export function RouteInfo({ stops }: RouteInfoProps): ReactElement {
       <div className="flex flex-col text-center items-center justify-center gap-4">
         <p className="font-medium text-2xl">Chegada</p>
         <MapPin size={32} />
-        <p>Rua Tibúrcio de Souza Pena, 1280</p>
+        <p>{end.displayText}</p>
       </div>
     </div>
   );
