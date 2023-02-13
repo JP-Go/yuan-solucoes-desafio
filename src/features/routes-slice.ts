@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { Location, Route } from '../@types/interfaces';
-import { devtools } from 'zustand/middleware';
+import { devtools, createJSONStorage, persist } from 'zustand/middleware';
 
 type Stops = Location[];
 type Routes = Route[];
@@ -81,63 +81,72 @@ interface RoutesStore {
 }
 
 export const useRoutesStore = create<RoutesStore>()(
-  devtools((set) => ({
-    routes: [],
-    stops: [],
-    routeId: undefined,
-    appendStop(newStop) {
-      set((state) => ({
-        ...state,
-        stops: appendStop(state.stops, newStop)
-      }));
-    },
-    clearStops() {
-      set((state) => ({
-        ...state,
-        stops: clearStops()
-      }));
-    },
-    setStops(stops) {
-      set((state) => ({ ...state, stops: stops }));
-    },
-    removeStop(locationId) {
-      set((state) => ({
-        ...state,
-        stops: removeStop(state.stops, locationId)
-      }));
-    },
-    moveTowardsEnd(location) {
-      set((state) => ({
-        ...state,
-        stops: moveTowardsEnd(state.stops, location)
-      }));
-    },
-    moveTowardsStart(location) {
-      set((state) => ({
-        ...state,
-        stops: moveTowardsStart(state.stops, location)
-      }));
-    },
-    setRouteId(routeId) {
-      set((state) => {
-        return {
-          ...state,
-          routeId: routeId
-        };
-      });
-    },
-    saveRoute(stops) {
-      set((state) => ({
-        ...state,
-        routes: saveRoute(state.routes, stops)
-      }));
-    },
-    updateRoute(stops, id) {
-      set((state) => ({
-        ...state,
-        routes: updateRoute(state.routes, stops, id),
-        routeId: undefined
-      }));
-    }
-  }))
+  devtools(
+    persist(
+      (set) => ({
+        routes: [],
+        stops: [],
+        routeId: undefined,
+        appendStop(newStop) {
+          set((state) => ({
+            ...state,
+            stops: appendStop(state.stops, newStop)
+          }));
+        },
+        clearStops() {
+          set((state) => ({
+            ...state,
+            stops: clearStops()
+          }));
+        },
+        setStops(stops) {
+          set((state) => ({ ...state, stops: stops }));
+        },
+        removeStop(locationId) {
+          set((state) => ({
+            ...state,
+            stops: removeStop(state.stops, locationId)
+          }));
+        },
+        moveTowardsEnd(location) {
+          set((state) => ({
+            ...state,
+            stops: moveTowardsEnd(state.stops, location)
+          }));
+        },
+        moveTowardsStart(location) {
+          set((state) => ({
+            ...state,
+            stops: moveTowardsStart(state.stops, location)
+          }));
+        },
+        setRouteId(routeId) {
+          set((state) => {
+            return {
+              ...state,
+              routeId: routeId
+            };
+          });
+        },
+        saveRoute(stops) {
+          set((state) => ({
+            ...state,
+            routes: saveRoute(state.routes, stops)
+          }));
+        },
+        updateRoute(stops, id) {
+          set((state) => ({
+            ...state,
+            routes: updateRoute(state.routes, stops, id),
+            routeId: undefined
+          }));
+        }
+      }),
+      {
+        name: 'guarda-rotas',
+        partialize: (state) => ({ routes: state.routes }),
+        storage: createJSONStorage(() => localStorage)
+      }
+    )
+  )
 );
