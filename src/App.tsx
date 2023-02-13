@@ -1,11 +1,18 @@
 /* eslint-disable @typescript-eslint/indent */
 /* eslint-disable multiline-ternary */
-import { type ReactElement, useMemo } from 'react';
+import {
+  type ReactElement,
+  useMemo,
+  useState,
+  useCallback,
+  useEffect
+} from 'react';
 import { InfoOverlay } from './components/InfoOverlay';
 import { SearchBar } from './components/SearchBar';
 import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
 import { useLocations } from './hooks/use-selected-locations';
 import { useRoutes } from './hooks/use-routes';
+import { Map } from './components/Map';
 
 const libraries = ['places'];
 
@@ -14,7 +21,8 @@ function App(): ReactElement {
     googleMapsApiKey: import.meta.env.VITE_GEOCODING_API_KEY,
     libraries
   });
-  const center = useMemo(() => ({ lat: -5.1, lng: -42.9 }), []);
+  const [map, setMap] = useState<google.maps.Map>(null!);
+  const onLoad = useCallback((map: google.maps.Map) => setMap(map), []);
 
   const { saveRoute, routes } = useRoutes();
   const {
@@ -30,17 +38,11 @@ function App(): ReactElement {
     <div className="flex flex-col relative w-screen h-screen items-center">
       {isLoaded ? (
         <>
-          <GoogleMap
-            zoom={10}
-            center={hasSelectedLocations ? locations.at(-1) : center}
-            mapContainerClassName="w-full h-full"
-          >
-            {hasSelectedLocations
-              ? locations.map((position) => {
-                  return <Marker key={position.id} position={position} />;
-                })
-              : null}
-          </GoogleMap>
+          <Map
+            onLoad={onLoad}
+            hasSelectedLocations={hasSelectedLocations}
+            locations={locations}
+          />
           <SearchBar onSelected={appendLocation} />
           <InfoOverlay
             title={!hasSelectedLocations ? 'Últimas rotas' : 'Nova rota'}
