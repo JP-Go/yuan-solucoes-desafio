@@ -34,6 +34,25 @@ function App(): ReactElement {
     moveTowardsStart,
     clearLocations
   } = useLocations();
+
+  useEffect(() => {
+    if (locations.length > 0 && map) {
+      const bounds = new google.maps.LatLngBounds();
+      locations.forEach((loc) => {
+        bounds.extend({
+          lat: loc.lat,
+          lng: loc.lng
+        });
+      });
+      map.fitBounds(bounds);
+    }
+  }, [map, locations]);
+  useEffect(() => {
+    map?.setOptions({
+      disableDefaultUI: true
+    });
+  });
+
   return (
     <div className="flex flex-col relative w-screen h-screen items-center">
       {isLoaded ? (
