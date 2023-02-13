@@ -6,26 +6,26 @@ import { SaveRouteButton } from './SaveRouteButton';
 
 interface NewRouteStopsProps {
   stops: Location[];
-  removeLocation: (locationId: string) => void;
+  removeStop: (locationId: string) => void;
   moveTowardsStart: (location: Location) => void;
   moveTowardsEnd: (location: Location) => void;
   saveRoute: (stops: Location[]) => void;
-  clearLocations: () => void;
+  clearStops: () => void;
 }
 
-export function NewRouteStops({
+export function RouteStops({
   stops,
-  removeLocation,
+  removeStop,
   moveTowardsStart,
   moveTowardsEnd,
   saveRoute,
-  clearLocations
+  clearStops
 }: NewRouteStopsProps): ReactElement {
   const [parent] = useAutoAnimate();
 
   function handleSaveRoute(stops: Location[]) {
     saveRoute(stops);
-    clearLocations();
+    clearStops();
   }
 
   return (
@@ -79,7 +79,7 @@ export function NewRouteStops({
                 <X
                   className="text-red-500 cursor-pointer"
                   size={24}
-                  onClick={() => removeLocation(location.id)}
+                  onClick={() => removeStop(location.id)}
                 />
               </div>
             </div>

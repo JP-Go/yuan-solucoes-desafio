@@ -2,30 +2,32 @@ import { useState } from 'react';
 import type { ReactElement } from 'react';
 import { Route, type Location } from '../@types/interfaces';
 import { RoutesList } from './RoutesList';
-import { NewRouteStops } from './NewRouteStops';
+import { RouteStops } from './RouteStops';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 
 interface InfoOverlayProps {
   title: string;
-  selectedLocations: Location[];
+  selectedStops: Location[];
   existingRoutes: Route[];
-  hasSelectedLocations: boolean;
-  removeLocation: (locationId: string) => void;
+  hasSelectedStops: boolean;
+  removeStop: (locationId: string) => void;
   moveTowardsEnd: (location: Location) => void;
   moveTowardsStart: (location: Location) => void;
+  setStops: (locations: Location[]) => void;
   saveRoute: (stops: Location[]) => void;
-  clearLocations: () => void;
+  clearStops: () => void;
 }
 
 export function InfoOverlay({
   title,
-  selectedLocations,
-  removeLocation,
-  hasSelectedLocations,
+  selectedStops,
+  removeStop,
+  hasSelectedStops,
   moveTowardsEnd,
   moveTowardsStart,
   existingRoutes,
-  clearLocations,
+  clearStops,
+  setStops,
   saveRoute
 }: InfoOverlayProps): ReactElement {
   const [expanded, setExpanded] = useState(false);
@@ -44,10 +46,10 @@ export function InfoOverlay({
                      : 'h-1/3 max-h-1/2 overflow-y-hidden'
                  }`}
     >
-      {hasSelectedLocations ? (
+      {hasSelectedStops ? (
         <button
           className="text-white bg-slate-700 font-bold rounded-lg p-2 drop-shadow-lg w-fit absolute top-4 right-4"
-          onClick={clearLocations}
+          onClick={clearStops}
         >
           Cancelar
         </button>
@@ -60,17 +62,17 @@ export function InfoOverlay({
         {title}
       </h1>
       <div ref={parent}>
-        {hasSelectedLocations ? (
-          <NewRouteStops
-            stops={selectedLocations}
-            clearLocations={clearLocations}
-            removeLocation={removeLocation}
+        {hasSelectedStops ? (
+          <RouteStops
+            stops={selectedStops}
+            clearStops={clearStops}
+            removeStop={removeStop}
             moveTowardsEnd={moveTowardsEnd}
             moveTowardsStart={moveTowardsStart}
             saveRoute={saveRoute}
           />
         ) : (
-          <RoutesList routes={existingRoutes} />
+          <RoutesList routes={existingRoutes} setStops={setStops} />
         )}
       </div>
     </div>
