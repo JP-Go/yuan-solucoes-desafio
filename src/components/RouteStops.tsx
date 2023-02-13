@@ -3,28 +3,31 @@ import { type ReactElement } from 'react';
 import { type Location } from '../@types/interfaces';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { SaveRouteButton } from './SaveRouteButton';
+import { useRoutesStore } from '../features/routes-slice';
 
-interface NewRouteStopsProps {
+interface RouteStopsProps {
   stops: Location[];
-  removeStop: (locationId: string) => void;
-  moveTowardsStart: (location: Location) => void;
-  moveTowardsEnd: (location: Location) => void;
-  saveRoute: (stops: Location[]) => void;
-  clearStops: () => void;
 }
 
-export function RouteStops({
-  stops,
-  removeStop,
-  moveTowardsStart,
-  moveTowardsEnd,
-  saveRoute,
-  clearStops
-}: NewRouteStopsProps): ReactElement {
+export function RouteStops({ stops }: RouteStopsProps): ReactElement {
   const [parent] = useAutoAnimate();
+  const {
+    moveTowardsEnd,
+    moveTowardsStart,
+    removeStop,
+    clearStops,
+    saveRoute,
+    routeId,
+    updateRoute
+  } = useRoutesStore();
 
   function handleSaveRoute(stops: Location[]) {
-    saveRoute(stops);
+    if (routeId) {
+      console.log(routeId);
+      updateRoute(stops, routeId);
+    } else {
+      saveRoute(stops);
+    }
     clearStops();
   }
 

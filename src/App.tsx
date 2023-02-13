@@ -4,9 +4,8 @@ import { type ReactElement, useState, useCallback, useEffect } from 'react';
 import { InfoOverlay } from './components/InfoOverlay';
 import { SearchBar } from './components/SearchBar';
 import { useLoadScript } from '@react-google-maps/api';
-import { useLocations } from './hooks/use-selected-locations';
-import { useRoutes } from './hooks/use-routes';
 import { Map } from './components/Map';
+import { useRoutesStore } from './features/routes-slice';
 
 const libraries = ['places'];
 
@@ -18,17 +17,9 @@ function App(): ReactElement {
   const [map, setMap] = useState<google.maps.Map>(null!);
   const onLoad = useCallback((map: google.maps.Map) => setMap(map), []);
 
-  const { saveRoute, routes } = useRoutes();
-  const {
-    stops,
-    appendStop,
-    removeStop,
-    hasSelectedStops,
-    moveTowardsEnd,
-    moveTowardsStart,
-    clearStops,
-    setStops
-  } = useLocations();
+  const store = useRoutesStore();
+  const { stops, routes } = store;
+  const hasSelectedStops = stops.length > 0;
 
   useEffect(() => {
     if (stops.length > 0 && map) {
@@ -59,18 +50,10 @@ function App(): ReactElement {
             hasSelectedStops={hasSelectedStops}
             locations={stops}
           />
-          <SearchBar onSelected={appendStop} />
+          <SearchBar />
           <InfoOverlay
-            setStops={setStops}
             title={!hasSelectedStops ? 'Últimas rotas' : 'Nova rota'}
             existingRoutes={routes}
-            clearStops={clearStops}
-            saveRoute={saveRoute}
-            selectedStops={stops}
-            removeStop={removeStop}
-            hasSelectedStops={hasSelectedStops}
-            moveTowardsEnd={moveTowardsEnd}
-            moveTowardsStart={moveTowardsStart}
           />
         </>
       ) : (
