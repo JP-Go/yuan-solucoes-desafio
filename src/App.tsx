@@ -48,10 +48,12 @@ function App(): ReactElement {
     }
   }, [map, locations]);
   useEffect(() => {
-    map?.setOptions({
-      disableDefaultUI: true
-    });
-  });
+    if (map) {
+      map.setOptions({
+        disableDefaultUI: true
+      });
+    }
+  }, []);
 
   return (
     <div className="flex flex-col relative w-screen h-screen items-center">
