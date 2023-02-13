@@ -26,6 +26,7 @@ export function SearchBar({ onSelected }: SearchBarProps): ReactElement {
       id: placeId
     });
     clearSuggestions();
+    setValue('');
   }
 
   return (
