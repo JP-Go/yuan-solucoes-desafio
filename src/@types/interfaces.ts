@@ -6,5 +6,6 @@ export interface Location {
 }
 
 export interface Route {
+  id: number;
   stops: Location[];
 }
