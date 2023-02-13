@@ -15,8 +15,14 @@ function App(): ReactElement {
   });
   const center = useMemo(() => ({ lat: -5.1, lng: -42.9 }), []);
 
-  const { locations, appendLocation, removeLocation, hasSelectedLocations } =
-    useLocations();
+  const {
+    locations,
+    appendLocation,
+    removeLocation,
+    hasSelectedLocations,
+    moveTowardsEnd,
+    moveTowardsStart
+  } = useLocations();
   return (
     <div className="flex flex-col relative w-screen h-screen items-center">
       {isLoaded ? (
@@ -38,6 +44,8 @@ function App(): ReactElement {
             selectedLocations={locations}
             removeLocation={removeLocation}
             hasSelectedLocations={hasSelectedLocations}
+            moveTowardsEnd={moveTowardsEnd}
+            moveTowardsStart={moveTowardsStart}
           />
         </>
       ) : (

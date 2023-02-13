@@ -1,4 +1,4 @@
-import { ArrowDown, X } from 'phosphor-react';
+import { ArrowDown, CaretDown, CaretUp, X } from 'phosphor-react';
 import { type ReactElement } from 'react';
 import { type Location } from '../@types/interfaces';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
@@ -6,79 +6,79 @@ import { useAutoAnimate } from '@formkit/auto-animate/react';
 interface NewRouteStopsProps {
   stops: Location[];
   removeLocation: (locationId: string) => void;
+  moveTowardsStart: (location: Location) => void;
+  moveTowardsEnd: (location: Location) => void;
 }
 
 export function NewRouteStops({
   stops,
-  removeLocation
+  removeLocation,
+  moveTowardsStart,
+  moveTowardsEnd
 }: NewRouteStopsProps): ReactElement {
   const [parent] = useAutoAnimate();
-  const firstStop = stops[0];
-  const lastStop = stops.length > 1 ? stops.at(-1) : undefined;
-  const middleStops =
-    stops.length > 2 ? stops.slice(1, stops.length - 1) : undefined;
 
   return (
     <div
       className="flex flex-col items-center text-slate-800 gap-4 p-8"
       ref={parent}
     >
-      <div className="text-slate-800 flex justify-center items-center w-full">
-        <div className="grow-1">
-          <span className="font-bold">Partindo de: </span>
-          <span>
-            {`${firstStop.displayText.slice(0, 50)}${
-              firstStop.displayText.length > 50 ? '...' : ''
-            }`}
-          </span>
-        </div>
-        <X
-          className="text-red-500 ml-8 justify-self-end grow-1 cursor-pointer"
-          size={24}
-          onClick={() => removeLocation(firstStop.id)}
-        />
-      </div>
-      {middleStops?.map((location) => {
+      {stops.map((location, idx) => {
+        const firstLocation = idx === 0;
+        const lastLocation = idx === stops.length - 1;
+        const predicateText = firstLocation
+          ? 'Partindo de: '
+          : lastLocation
+          ? 'Chegando em: '
+          : 'Parada em: ';
         return (
           <>
-            <ArrowDown size={40} />
-            <p
+            <div
               key={location.id}
-              className="text-slate-800 flex items-center justify-center w-full"
+              className="text-slate-800 flex justify-around items-center w-full"
             >
-              <b className="font-bold">Parada em:</b>
-              {` ${location.displayText.slice(0, 50)}${
-                location.displayText.length > 50 ? '...' : ''
-              }`}
-              <X
-                className="text-red-500 justify-self-end ml-8 cursor-pointer"
-                size={24}
-                onClick={() => removeLocation(location.id)}
-              />
-            </p>
+              <div className="grow-1">
+                <span className="font-bold">{predicateText}</span>
+                <span>
+                  {`${location.displayText.slice(0, 50)}${
+                    location.displayText.length > 50 ? '...' : ''
+                  }`}
+                </span>
+              </div>
+              <div className="flex gap-2 self-end">
+                {!firstLocation && (
+                  <CaretUp
+                    weight="fill"
+                    size={24}
+                    className="text-slate-500 cursor-pointer"
+                    onClick={() => {
+                      moveTowardsStart(location);
+                    }}
+                  />
+                )}
+                {!lastLocation && (
+                  <CaretDown
+                    weight="fill"
+                    size={24}
+                    className="text-slate-500 cursor-pointer"
+                    onClick={() => {
+                      moveTowardsEnd(location);
+                    }}
+                  />
+                )}
+                <X
+                  className="text-red-500 cursor-pointer"
+                  size={24}
+                  onClick={() => removeLocation(location.id)}
+                />
+              </div>
+            </div>
+            {idx !== stops.length - 1 ? (
+              <ArrowDown size={24} className="text-slate-500" weight="bold" />
+            ) : null}
           </>
         );
       })}
-      {lastStop !== undefined && (
-        <>
-          <ArrowDown size={40} />
-          <div className="text-slate-800 flex justify-center items-center w-full">
-            <div className="grow-1">
-              <span className="font-bold">Chegando a: </span>
-              <span>
-                {`${lastStop.displayText.slice(0, 50)}${
-                  lastStop.displayText.length > 50 ? '...' : ''
-                }`}
-              </span>
-            </div>
-            <X
-              className="text-red-500 justify-self-end ml-8 cursor-pointer"
-              size={24}
-              onClick={() => removeLocation(lastStop.id)}
-            />
-          </div>
-        </>
-      )}
     </div>
   );
 }

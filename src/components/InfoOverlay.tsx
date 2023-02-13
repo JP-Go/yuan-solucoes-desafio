@@ -9,6 +9,8 @@ interface InfoOverlayProps {
   title: string;
   selectedLocations: Location[];
   removeLocation: (locationId: string) => void;
+  moveTowardsEnd: (location: Location) => void;
+  moveTowardsStart: (location: Location) => void;
   hasSelectedLocations: boolean;
 }
 
@@ -16,7 +18,9 @@ export function InfoOverlay({
   title,
   selectedLocations,
   removeLocation,
-  hasSelectedLocations
+  hasSelectedLocations,
+  moveTowardsEnd,
+  moveTowardsStart
 }: InfoOverlayProps): ReactElement {
   const [expanded, setExpanded] = useState(false);
   const [parent] = useAutoAnimate();
@@ -37,7 +41,7 @@ export function InfoOverlay({
       <div
         className="w-10 h-2 bg-slate-300 rounded-full mx-auto cursor-pointer absolute left-1/2 -translate-x-1/2"
         onClick={toggleExpanded}
-      ></div>
+      />
       <h1 className="font-bold text-3xl w-full font-title ml-8 mb-4">
         {title}
       </h1>
@@ -46,6 +50,8 @@ export function InfoOverlay({
           <NewRouteStops
             stops={selectedLocations}
             removeLocation={removeLocation}
+            moveTowardsEnd={moveTowardsEnd}
+            moveTowardsStart={moveTowardsStart}
           />
         ) : (
           <RoutesList />
