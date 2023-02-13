@@ -8,12 +8,14 @@ import { useAutoAnimate } from '@formkit/auto-animate/react';
 interface InfoOverlayProps {
   title: string;
   selectedLocations: Location[];
+  removeLocation: (locationId: string) => void;
   hasSelectedLocations: boolean;
 }
 
 export function InfoOverlay({
   title,
   selectedLocations,
+  removeLocation,
   hasSelectedLocations
 }: InfoOverlayProps): ReactElement {
   const [expanded, setExpanded] = useState(false);
@@ -41,7 +43,10 @@ export function InfoOverlay({
       </h1>
       <div ref={parent}>
         {hasSelectedLocations ? (
-          <NewRouteStops stops={selectedLocations} />
+          <NewRouteStops
+            stops={selectedLocations}
+            removeLocation={removeLocation}
+          />
         ) : (
           <RoutesList />
         )}

@@ -1,13 +1,17 @@
-import { ArrowDown } from 'phosphor-react';
+import { ArrowDown, X } from 'phosphor-react';
 import { type ReactElement } from 'react';
 import { type Location } from '../@types/interfaces';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 
 interface NewRouteStopsProps {
   stops: Location[];
+  removeLocation: (locationId: string) => void;
 }
 
-export function NewRouteStops({ stops }: NewRouteStopsProps): ReactElement {
+export function NewRouteStops({
+  stops,
+  removeLocation
+}: NewRouteStopsProps): ReactElement {
   const [parent] = useAutoAnimate();
   const firstStop = stops[0];
   const lastStop = stops.length > 1 ? stops.at(-1) : undefined;
@@ -16,24 +20,41 @@ export function NewRouteStops({ stops }: NewRouteStopsProps): ReactElement {
 
   return (
     <div
-      className="flex flex-col items-center text-slate-800 gap-4"
+      className="flex flex-col items-center text-slate-800 gap-4 p-8"
       ref={parent}
     >
-      <p className="text-slate-800">
-        <b className="font-bold">Partindo de:</b>
-        {` ${firstStop.displayText.slice(0, 50)}${
-          firstStop.displayText.length > 50 ? '...' : ''
-        }`}
-      </p>
+      <div className="text-slate-800 flex justify-center items-center w-full">
+        <div className="grow-1">
+          <span className="font-bold">Partindo de: </span>
+          <span>
+            {`${firstStop.displayText.slice(0, 50)}${
+              firstStop.displayText.length > 50 ? '...' : ''
+            }`}
+          </span>
+        </div>
+        <X
+          className="text-red-500 ml-8 justify-self-end grow-1 cursor-pointer"
+          size={24}
+          onClick={() => removeLocation(firstStop.id)}
+        />
+      </div>
       {middleStops?.map((location) => {
         return (
           <>
             <ArrowDown size={40} />
-            <p key={location.id}>
+            <p
+              key={location.id}
+              className="text-slate-800 flex items-center justify-center w-full"
+            >
               <b className="font-bold">Parada em:</b>
               {` ${location.displayText.slice(0, 50)}${
                 location.displayText.length > 50 ? '...' : ''
               }`}
+              <X
+                className="text-red-500 justify-self-end ml-8 cursor-pointer"
+                size={24}
+                onClick={() => removeLocation(location.id)}
+              />
             </p>
           </>
         );
@@ -41,12 +62,21 @@ export function NewRouteStops({ stops }: NewRouteStopsProps): ReactElement {
       {lastStop !== undefined && (
         <>
           <ArrowDown size={40} />
-          <p>
-            <b className="font-bold">Chegando a:</b>
-            {` ${lastStop.displayText.slice(0, 50)}${
-              lastStop.displayText.length > 50 ? '...' : ''
-            }`}
-          </p>
+          <div className="text-slate-800 flex justify-center items-center w-full">
+            <div className="grow-1">
+              <span className="font-bold">Chegando a: </span>
+              <span>
+                {`${lastStop.displayText.slice(0, 50)}${
+                  lastStop.displayText.length > 50 ? '...' : ''
+                }`}
+              </span>
+            </div>
+            <X
+              className="text-red-500 justify-self-end ml-8 cursor-pointer"
+              size={24}
+              onClick={() => removeLocation(lastStop.id)}
+            />
+          </div>
         </>
       )}
     </div>

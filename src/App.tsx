@@ -34,8 +34,9 @@ function App(): ReactElement {
           </GoogleMap>
           <SearchBar onSelected={appendLocation} />
           <InfoOverlay
-            title={hasSelectedLocations ? 'Últimas rotas' : 'Nova rota'}
+            title={!hasSelectedLocations ? 'Últimas rotas' : 'Nova rota'}
             selectedLocations={locations}
+            removeLocation={removeLocation}
             hasSelectedLocations={hasSelectedLocations}
           />
         </>
