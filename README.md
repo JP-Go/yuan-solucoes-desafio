@@ -1,7 +1,7 @@
 # Guarda-rotas
 
-Aplicação que guarda suas rotas de trânsito favoritas
-
+Uma aplicação que guarda suas rotas de trânsito favoritas. 
+Uma demo dessa aplicação está disponível em ()[]
 
 # Recursos adicionais
 
