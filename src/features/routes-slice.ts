@@ -10,8 +10,7 @@ function saveRoute(routes: Routes, stops: Stops) {
     id: routes.length + 1,
     stops
   };
-  routes.push(route);
-  return routes;
+  return [...routes, route];
 }
 
 function updateRoute(routes: Routes, stops: Stops, id: number) {
@@ -20,19 +19,16 @@ function updateRoute(routes: Routes, stops: Stops, id: number) {
     throw new Error('Invalid state');
   }
   route.stops = stops;
-  routes = routes.filter((r) => r.id !== route.id);
-  routes.push(route);
-  return routes;
+  const newRoutes = routes.filter((r) => r.id !== route.id);
+  return [...newRoutes, route];
 }
 
 function appendStop(stops: Stops, newStop: Location) {
-  stops.push(newStop);
-  return stops;
+  return [...stops, newStop];
 }
 
 function removeStop(stops: Stops, locationId: string) {
-  stops = stops.filter((stop) => stop.id !== locationId);
-  return stops;
+  return stops.filter((stop) => stop.id !== locationId);
 }
 
 function clearStops() {
@@ -47,9 +43,10 @@ function moveTowardsStart(stops: Stops, location: Location) {
   if (index === 0) {
     return;
   }
-  stops[index] = stops[index - 1];
-  stops[index - 1] = location;
-  return stops;
+  const stopsCopy = [...stops];
+  stopsCopy[index - 1] = location;
+  stopsCopy[index] = stops[index - 1];
+  return stopsCopy;
 }
 
 function moveTowardsEnd(stops: Stops, location: Location) {
@@ -60,9 +57,11 @@ function moveTowardsEnd(stops: Stops, location: Location) {
   if (index === stops.length - 1) {
     return;
   }
-  stops[index] = stops[index + 1];
-  stops[index + 1] = location;
-  return stops;
+
+  const stopsCopy = [...stops];
+  stopsCopy[index] = stops[index + 1];
+  stopsCopy[index + 1] = location;
+  return stopsCopy;
 }
 
 interface RoutesStore {
