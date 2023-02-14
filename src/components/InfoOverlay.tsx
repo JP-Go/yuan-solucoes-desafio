@@ -30,10 +30,8 @@ export function InfoOverlay({
     <div
       className={`absolute bottom-0 bg-white text-slate-800
                  w-full md:w-3/5 py-4 rounded-lg flex flex-col align-center
-                 drop-shadow-lg transition-all ${
-                   expanded
-                     ? 'h-2/3 max-h-full overflow-y-scroll'
-                     : 'h-1/3 max-h-1/2 overflow-y-hidden'
+                 drop-shadow-lg transition-all overflow-y-scroll ${
+                   expanded ? 'h-2/3 max-h-full ' : 'h-1/3 max-h-1/2'
                  }`}
     >
       {hasSelectedStops ? (
