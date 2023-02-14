@@ -11,14 +11,13 @@ const libraries = ['places'];
 
 function App(): ReactElement {
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: import.meta.env.VITE_GEOCODING_API_KEY,
+    googleMapsApiKey: import.meta.env.VITE_GOOGLE_API_KEY,
     libraries
   });
   const [map, setMap] = useState<google.maps.Map>(null!);
   const onLoad = useCallback((map: google.maps.Map) => setMap(map), []);
 
-  const store = useRoutesStore();
-  const { stops, routes } = store;
+  const { stops, routes } = useRoutesStore();
   const hasSelectedStops = stops.length > 0;
 
   useEffect(() => {
@@ -31,6 +30,7 @@ function App(): ReactElement {
         });
       });
       map.fitBounds(bounds);
+      map.panTo(bounds.getCenter());
     }
   }, [map, stops]);
   useEffect(() => {
