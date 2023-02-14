@@ -3,6 +3,10 @@
 Aplicação que guarda suas rotas de trânsito favoritas
 
 
+# Recursos adicionais
+
+- Link do projeto de desing no Figma: [https://www.figma.com/file/Pv4heqV0ntsTKOJ0AUKZdd/Yuan-Desafio-Desing?node-id=2%3A233&t=HLIC2cYG5FnWnJw3-1](https://www.figma.com/file/Pv4heqV0ntsTKOJ0AUKZdd/Yuan-Desafio-Desing?node-id=2%3A233&t=HLIC2cYG5FnWnJw3-1)
+
 # Rodando a aplicação em modo `dev`
 
 ## Requisitos
