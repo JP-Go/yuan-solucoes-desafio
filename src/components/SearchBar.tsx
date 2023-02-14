@@ -2,7 +2,7 @@ import { MagnifyingGlass } from 'phosphor-react';
 import { type ReactElement } from 'react';
 import usePlacesAutocomplete from 'use-places-autocomplete';
 import { useRoutesStore } from '../features/routes-slice';
-import { fetchAddresses } from '../lib/api/geocoding';
+import { fetchAddress } from '../lib/api/geocoding';
 
 export function SearchBar(): ReactElement {
   const store = useRoutesStore();
@@ -15,7 +15,7 @@ export function SearchBar(): ReactElement {
   } = usePlacesAutocomplete();
 
   async function handleSelectLocation(placeId: string): Promise<void> {
-    const location = await fetchAddresses(placeId);
+    const location = await fetchAddress(placeId);
     store.appendStop(location);
     clearSuggestions();
     setValue('');

@@ -20,7 +20,7 @@ interface LocationApiResponse {
 
 const geocodingCancelTokenSource = axios.CancelToken.source();
 
-export async function fetchAddresses(id: string): Promise<Location> {
+export async function fetchAddress(id: string): Promise<Location> {
   const response = await geocodingProvider.get<LocationApiResponse>('', {
     params: {
       place_id: id,
