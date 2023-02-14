@@ -76,7 +76,7 @@ interface RoutesStore {
   setStops: (stops: Stops) => void;
   moveTowardsStart: (location: Location) => void;
   moveTowardsEnd: (location: Location) => void;
-  setRouteId: (routeId: number) => void;
+  setRouteId: (routeId: number | undefined) => void;
 }
 
 export const useRoutesStore = create<RoutesStore>()(

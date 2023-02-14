@@ -39,7 +39,10 @@ export function InfoOverlay({
       {hasSelectedStops ? (
         <button
           className="text-white bg-slate-700 font-bold rounded-lg p-2 drop-shadow-lg w-fit absolute top-4 right-4"
-          onClick={clearStops}
+          onClick={() => {
+            clearStops();
+            setRouteId(undefined);
+          }}
         >
           Cancelar
         </button>
