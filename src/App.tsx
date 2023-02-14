@@ -7,7 +7,9 @@ import { useLoadScript } from '@react-google-maps/api';
 import { Map } from './components/Map';
 import { useRoutesStore } from './features/routes-slice';
 
-const libraries = ['places'];
+const libraries = ['places'] as [
+  'places' | 'drawing' | 'geometry' | 'localContext' | 'visualization'
+];
 const TERESINA_COORDS = { lat: -5.09, lng: -42.8 };
 
 function App(): ReactElement {
