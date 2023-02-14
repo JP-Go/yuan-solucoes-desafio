@@ -35,3 +35,8 @@ Depois execute os seguintes passos em um terminal
   ```
 4. execute `npm (yarn|pnpm) run dev` para executar a aplicação
 4. abra o navegador no endereço `http://localhost:5173`
+
+# Melhorias a serem realizadas
+
+- [] Habilidade de excluir rotas criadas
+- [] Melhor responsividade do design
