@@ -24,7 +24,7 @@ export async function fetchAddress(id: string): Promise<Location> {
   const response = await geocodingProvider.get<LocationApiResponse>('', {
     params: {
       place_id: id,
-      key: import.meta.env.VITE_GEOCODING_API_KEY
+      key: import.meta.env.VITE_GOOGLE_API_KEY
     },
     cancelToken: geocodingCancelTokenSource.token
   });
