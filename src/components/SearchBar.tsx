@@ -16,12 +16,7 @@ export function SearchBar(): ReactElement {
 
   async function handleSelectLocation(placeId: string): Promise<void> {
     const location = await fetchAddresses(placeId);
-    store.appendStop({
-      displayText: location.displayName,
-      lat: location.lat,
-      lng: location.lng,
-      id: placeId
-    });
+    store.appendStop(location);
     clearSuggestions();
     setValue('');
   }
