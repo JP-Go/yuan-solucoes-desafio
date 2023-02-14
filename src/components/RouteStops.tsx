@@ -1,4 +1,3 @@
-import { ArrowDown, CaretDown, CaretUp, X } from 'phosphor-react';
 import { type ReactElement } from 'react';
 import { type Location } from '../@types/interfaces';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
