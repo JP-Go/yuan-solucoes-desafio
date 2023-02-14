@@ -1,6 +1,6 @@
 import type { ReactElement } from 'react';
 import { MapPin, DotsThree } from 'phosphor-react';
-import { Location, Route } from '../@types/interfaces';
+import { Route } from '../@types/interfaces';
 import { useRoutesStore } from '../features/routes-slice';
 
 interface RouteInfoProps {
@@ -23,23 +23,23 @@ export function RouteInfo({ route }: RouteInfoProps): ReactElement {
       <div className="flex flex-col text-center items-center justify-center gap-4 px-8">
         <p className="font-medium text-2xl">Partida</p>
         <MapPin size={32} />
-        <p>{start.displayText}</p>
+        <p className="text-slate-500">{start.displayText}</p>
       </div>
-      <div className="flex w-full items-center justify-center space-between">
+      <div className="flex w-full items-center justify-center space-between text-slate-500">
         {extraStops > 0 ? (
           <>
-            <DotsThree size={100} />
+            <DotsThree size={80} />
             <span>+{extraStops} paradas</span>
-            <DotsThree size={100} />
+            <DotsThree size={80} />
           </>
         ) : (
-          <DotsThree size={100} />
+          <DotsThree size={80} />
         )}
       </div>
       <div className="flex flex-col text-center items-center justify-center gap-4">
         <p className="font-medium text-2xl">Chegada</p>
         <MapPin size={32} />
-        <p>{end.displayText}</p>
+        <p className="text-slate-500">{end.displayText}</p>
       </div>
     </div>
   );
