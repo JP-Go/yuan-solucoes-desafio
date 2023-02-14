@@ -29,7 +29,7 @@ export function InfoOverlay({
   return (
     <div
       className={`absolute bottom-0 bg-white text-slate-800
-                 w-full md:w-3/5 md:py-4 rounded-lg flex flex-col align-center
+                 w-full md:w-3/5 py-4 rounded-lg flex flex-col align-center
                  drop-shadow-lg transition-all ${
                    expanded
                      ? 'h-2/3 max-h-full overflow-y-scroll'
@@ -51,7 +51,7 @@ export function InfoOverlay({
         className="w-10 h-2 bg-slate-300 rounded-full mx-auto cursor-pointer absolute left-1/2 -translate-x-1/2"
         onClick={toggleExpanded}
       />
-      <h1 className="font-bold text-3xl w-full font-title ml-8 mb-4">
+      <h1 className="font-bold text-3xl w-full font-title ml-8 mb-4 mt-2">
         {title}
       </h1>
       <div ref={parent}>
