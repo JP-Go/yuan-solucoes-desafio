@@ -1,28 +1,31 @@
 import { useState } from 'react';
 import type { ReactElement } from 'react';
-import { Route, type Location } from '../@types/interfaces';
+import { Route } from '../@types/interfaces';
 import { RoutesList } from './RoutesList';
 import { RouteStops } from './RouteStops';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { useRoutesStore } from '../features/routes-slice';
 
 interface InfoOverlayProps {
-  title: string;
   existingRoutes: Route[];
 }
 
 export function InfoOverlay({
-  title,
   existingRoutes
 }: InfoOverlayProps): ReactElement {
   const [expanded, setExpanded] = useState(false);
   const [parent] = useAutoAnimate();
-  const { stops, clearStops } = useRoutesStore();
+  const { stops, clearStops, routeId, setRouteId } = useRoutesStore();
   const hasSelectedStops = stops.length > 0;
 
   function toggleExpanded(): void {
     setExpanded((e) => !e);
   }
+  const title = !hasSelectedStops
+    ? 'Últimas rotas'
+    : routeId === undefined
+    ? 'Nova rota'
+    : 'Editar rota';
   return (
     <div
       className={`absolute bottom-0 bg-white text-slate-800

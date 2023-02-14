@@ -51,10 +51,7 @@ function App(): ReactElement {
             locations={stops}
           />
           <SearchBar />
-          <InfoOverlay
-            title={!hasSelectedStops ? 'Últimas rotas' : 'Nova rota'}
-            existingRoutes={routes}
-          />
+          <InfoOverlay existingRoutes={routes} />
         </>
       ) : (
         <div className="w-20 h-20 border-l-2 border-b-2 border-slate-800 rounded-full animate-spin"></div>
