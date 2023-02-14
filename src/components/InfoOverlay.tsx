@@ -4,34 +4,21 @@ import { Route, type Location } from '../@types/interfaces';
 import { RoutesList } from './RoutesList';
 import { RouteStops } from './RouteStops';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
+import { useRoutesStore } from '../features/routes-slice';
 
 interface InfoOverlayProps {
   title: string;
-  selectedStops: Location[];
   existingRoutes: Route[];
-  hasSelectedStops: boolean;
-  removeStop: (locationId: string) => void;
-  moveTowardsEnd: (location: Location) => void;
-  moveTowardsStart: (location: Location) => void;
-  setStops: (locations: Location[]) => void;
-  saveRoute: (stops: Location[]) => void;
-  clearStops: () => void;
 }
 
 export function InfoOverlay({
   title,
-  selectedStops,
-  removeStop,
-  hasSelectedStops,
-  moveTowardsEnd,
-  moveTowardsStart,
-  existingRoutes,
-  clearStops,
-  setStops,
-  saveRoute
+  existingRoutes
 }: InfoOverlayProps): ReactElement {
   const [expanded, setExpanded] = useState(false);
   const [parent] = useAutoAnimate();
+  const { stops, clearStops } = useRoutesStore();
+  const hasSelectedStops = stops.length > 0;
 
   function toggleExpanded(): void {
     setExpanded((e) => !e);
@@ -63,16 +50,9 @@ export function InfoOverlay({
       </h1>
       <div ref={parent}>
         {hasSelectedStops ? (
-          <RouteStops
-            stops={selectedStops}
-            clearStops={clearStops}
-            removeStop={removeStop}
-            moveTowardsEnd={moveTowardsEnd}
-            moveTowardsStart={moveTowardsStart}
-            saveRoute={saveRoute}
-          />
+          <RouteStops stops={stops} />
         ) : (
-          <RoutesList routes={existingRoutes} setStops={setStops} />
+          <RoutesList routes={existingRoutes} />
         )}
       </div>
     </div>
