@@ -22,21 +22,22 @@ function App(): ReactElement {
   const hasSelectedStops = stops.length > 0;
 
   useEffect(() => {
-    if (stops.length > 0 && map) {
-      const bounds = new google.maps.LatLngBounds();
-      stops.forEach((loc) => {
-        bounds.extend({
-          lat: loc.lat,
-          lng: loc.lng
+    if (map) {
+      if (stops.length > 0) {
+        const bounds = new google.maps.LatLngBounds();
+        stops.forEach((loc) => {
+          bounds.extend({
+            lat: loc.lat,
+            lng: loc.lng
+          });
         });
-      });
-      map.fitBounds(bounds);
-      map.setZoom(13);
-    } else {
-      map.setZoom(13);
-      map.setCenter(TERESINA_COORDS);
+      } else {
+        map.setZoom(13);
+        map.setCenter(TERESINA_COORDS);
+      }
     }
   }, [map, stops]);
+
   useEffect(() => {
     if (map) {
       map.setOptions({
