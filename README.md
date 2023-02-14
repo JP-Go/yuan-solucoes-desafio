@@ -1,7 +1,11 @@
 # Guarda-rotas
 
-Aplicação que guarda suas rotas de trânsito favoritas
+Uma aplicação que guarda suas rotas de trânsito favoritas. 
+Uma demo dessa aplicação está disponível em (https://guarda-rotas.vercel.app/)[https://guarda-rotas.vercel.app/]
 
+# Recursos adicionais
+
+- Link do projeto de desing no Figma: [https://www.figma.com/file/Pv4heqV0ntsTKOJ0AUKZdd/Yuan-Desafio-Desing?node-id=2%3A233&t=HLIC2cYG5FnWnJw3-1](https://www.figma.com/file/Pv4heqV0ntsTKOJ0AUKZdd/Yuan-Desafio-Desing?node-id=2%3A233&t=HLIC2cYG5FnWnJw3-1)
 
 # Rodando a aplicação em modo `dev`
 
@@ -31,3 +35,8 @@ Depois execute os seguintes passos em um terminal
   ```
 4. execute `npm (yarn|pnpm) run dev` para executar a aplicação
 4. abra o navegador no endereço `http://localhost:5173`
+
+# Melhorias a serem realizadas
+
+- [] Habilidade de excluir rotas criadas
+- [] Melhor responsividade do design
