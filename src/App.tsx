@@ -4,31 +4,22 @@ import { type ReactElement, useState, useCallback, useEffect } from 'react';
 import { InfoOverlay } from './components/InfoOverlay';
 import { SearchBar } from './components/SearchBar';
 import { useLoadScript } from '@react-google-maps/api';
-import { useLocations } from './hooks/use-selected-locations';
-import { useRoutes } from './hooks/use-routes';
 import { Map } from './components/Map';
+import { useRoutesStore } from './features/routes-slice';
 
 const libraries = ['places'];
+const TERESINA_COORDS = { lat: -5.09, lng: -42.8 };
 
 function App(): ReactElement {
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: import.meta.env.VITE_GEOCODING_API_KEY,
+    googleMapsApiKey: import.meta.env.VITE_GOOGLE_API_KEY,
     libraries
   });
   const [map, setMap] = useState<google.maps.Map>(null!);
   const onLoad = useCallback((map: google.maps.Map) => setMap(map), []);
 
-  const { saveRoute, routes } = useRoutes();
-  const {
-    stops,
-    appendStop,
-    removeStop,
-    hasSelectedStops,
-    moveTowardsEnd,
-    moveTowardsStart,
-    clearStops,
-    setStops
-  } = useLocations();
+  const { stops, routes } = useRoutesStore();
+  const hasSelectedStops = stops.length > 0;
 
   useEffect(() => {
     if (stops.length > 0 && map) {
@@ -40,6 +31,10 @@ function App(): ReactElement {
         });
       });
       map.fitBounds(bounds);
+      map.setZoom(13);
+    } else {
+      map.setZoom(13);
+      map.setCenter(TERESINA_COORDS);
     }
   }, [map, stops]);
   useEffect(() => {
@@ -59,19 +54,8 @@ function App(): ReactElement {
             hasSelectedStops={hasSelectedStops}
             locations={stops}
           />
-          <SearchBar onSelected={appendStop} />
-          <InfoOverlay
-            setStops={setStops}
-            title={!hasSelectedStops ? 'Últimas rotas' : 'Nova rota'}
-            existingRoutes={routes}
-            clearStops={clearStops}
-            saveRoute={saveRoute}
-            selectedStops={stops}
-            removeStop={removeStop}
-            hasSelectedStops={hasSelectedStops}
-            moveTowardsEnd={moveTowardsEnd}
-            moveTowardsStart={moveTowardsStart}
-          />
+          <SearchBar />
+          <InfoOverlay existingRoutes={routes} />
         </>
       ) : (
         <div className="w-20 h-20 border-l-2 border-b-2 border-slate-800 rounded-full animate-spin"></div>

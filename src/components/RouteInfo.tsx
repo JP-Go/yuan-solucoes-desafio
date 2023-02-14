@@ -1,20 +1,22 @@
 import type { ReactElement } from 'react';
 import { MapPin, DotsThree } from 'phosphor-react';
 import { Location, Route } from '../@types/interfaces';
+import { useRoutesStore } from '../features/routes-slice';
 
 interface RouteInfoProps {
   route: Route;
-  setStops: (stops: Location[]) => void;
 }
 
-export function RouteInfo({ route, setStops }: RouteInfoProps): ReactElement {
+export function RouteInfo({ route }: RouteInfoProps): ReactElement {
   const start = route.stops[0];
   const end = route.stops.at(-1)!;
   const extraStops = route.stops.length - 2;
+  const { setStops, setRouteId } = useRoutesStore();
   return (
     <div
       className="grid grid-cols-3 space-around w-full border-t-2 border-slate-500 px-8 py-4 cursor-pointer"
       onClick={() => {
+        setRouteId(route.id);
         setStops(route.stops);
       }}
     >
