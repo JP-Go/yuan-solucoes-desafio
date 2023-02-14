@@ -8,6 +8,7 @@ import { Map } from './components/Map';
 import { useRoutesStore } from './features/routes-slice';
 
 const libraries = ['places'];
+const TERESINA_COORDS = { lat: -5.09, lng: -42.8 };
 
 function App(): ReactElement {
   const { isLoaded } = useLoadScript({
@@ -30,7 +31,10 @@ function App(): ReactElement {
         });
       });
       map.fitBounds(bounds);
-      map.panTo(bounds.getCenter());
+      map.setZoom(13);
+    } else {
+      map.setZoom(13);
+      map.setCenter(TERESINA_COORDS);
     }
   }, [map, stops]);
   useEffect(() => {
