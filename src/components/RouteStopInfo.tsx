@@ -21,9 +21,9 @@ export function RouteStopInfo({
       className="flex flex-col items-center gap-2 w-full relative"
       key={location.id}
     >
-      <div className="text-slate-800 grid grid-cols-6 grid-rows-none w-3/4 max-w-3/4 place-items-center">
+      <div className="text-slate-800 grid grid-cols-6 grid-rows-none md:w-3/4 md:max-w-3/4 place-items-center">
         <div className="col-start-1 col-span-5 place-content-center">
-          <p className="truncate">
+          <p className="md:truncate">
             <strong className="font-bold">{predicateText}</strong>
             {location.displayText}
           </p>
