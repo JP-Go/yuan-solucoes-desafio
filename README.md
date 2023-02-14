@@ -9,7 +9,7 @@ Aplicação que guarda suas rotas de trânsito favoritas
 
 São requisitos para rodar essa aplicação:
 
-- Uma chave da API de Places do Google
+- Uma chave da API de mapas do Google
   [https://developers.google.com/maps/documentation/places/web-service](https://developers.google.com/maps/documentation/places/web-service)
 - `node>=18.13.0` [https://nodejs.org/en/](https://nodejs.org/en/) 
 
@@ -27,6 +27,7 @@ Depois execute os seguintes passos em um terminal
 1. adicione um arquivo `.env` com as seguintes variáveis:
   ```
   VITE_GEOCODING_API_BASE_URL=https://maps.googleapis.com/maps/api/geocode/json
+  VITE_GEOCODING_API_BASE_URL=https://maps.googleapis.com/maps/api/directions/json
   VITE_GEOCODING_API_KEY=<google-maps-api-key>
   ```
 4. execute `npm (yarn|pnpm) run dev` para executar a aplicação
