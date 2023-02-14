@@ -40,7 +40,7 @@ export function SearchBar(): ReactElement {
         />
       </div>
       {status === 'OK' ? (
-        <ul className="bg-white flex flex-col z-10 w-full h-40 rounded-lg mt-2 p-2 gap-4 font-title text-slate-500 overflow-y-scroll">
+        <ul className="bg-white flex flex-col z-10 w-full h-40 rounded-lg mt-2 p-2 gap-2 font-title text-slate-500 overflow-y-scroll">
           {data.map(({ place_id: placeId, description }) => {
             return (
               <li
